@@ -13,7 +13,7 @@ struct ListDetail: View {
     let calculations: HoursList
     @State private var showCopied = false
     @State var selectedMode: ViewMode = .hours
-    
+
     var body: some View {
         VStack {
             Picker("Mode", selection: $selectedMode) {
@@ -23,11 +23,11 @@ struct ListDetail: View {
             .pickerStyle(.segmented)
             .padding(.horizontal)
             .padding(.top, 16)
-            
+
             if selectedMode == .hours {
-                
+
                 calculatedHoursList
-                
+
             } else {
 
                 calculatedEarningsList
@@ -48,7 +48,7 @@ struct ListDetail: View {
         }
         .animation(.easeInOut, value: showCopied)
     }
-    
+
     private var calculatedHoursList: some View {
         VStack {
             Form {
@@ -62,7 +62,7 @@ struct ListDetail: View {
                     CopyButton(result: calculations.sumHours, showCopied: $showCopied)
                 }
                 .foregroundStyle(.primary)
-                
+
                 ForEach(calculations.listResults) { row in
                     HStack {
                         HStack {
@@ -70,9 +70,9 @@ struct ListDetail: View {
                             Text("\(row.resultString)")
                         }
                         .foregroundStyle(.secondary)
-                        
+
                         Spacer()
-                        
+
                         HStack {
                             Image(systemName: "h.circle")
                             Text("\(row.resultDigit, specifier: "%.3f")")
@@ -84,19 +84,19 @@ struct ListDetail: View {
             }
         }
     }
-    
+
     private var calculatedEarningsList: some View {
         Form {
             HStack {
                 Text("Hourly rate")
                 Text("\(calculations.hourlyRate)")
                 Spacer()
-                if let rate = Double(calculations.hourlyRate) {
+                if let rate = Totals.rate(calculations.hourlyRate) {
                     Image(systemName: "sum")
                     Text("\(calculations.sumHours * rate, specifier: "%.2f")")
                 }
             }
-            
+
             ForEach(calculations.listResults) { row in
                 HStack {
                     HStack {
@@ -104,13 +104,13 @@ struct ListDetail: View {
                         Text("\(row.resultDigit, specifier: "%.3f")")
                     }
                     .foregroundStyle(.green)
-                    
+
                     Spacer()
-                    
+
                     HStack {
                         Image(systemName: "dollarsign.circle")
-                        
-                        if let rate = Double(calculations.hourlyRate) {
+
+                        if let rate = Totals.rate(calculations.hourlyRate) {
                             Text("\(row.resultDigit * rate, specifier: "%.2f")")
                         } else {
                             Text("")
@@ -121,9 +121,9 @@ struct ListDetail: View {
             }
         }
     }
-    
+
     func exportCSV() -> String {
-        let rate = Double(calculations.hourlyRate) ?? 0
+        let rate = Totals.rate(calculations.hourlyRate) ?? 0
         var csv = "Duration;Hours;Earnings;Hourly Rate\n"
         for row in calculations.listResults {
             let earnings = rate > 0 ? String(format: "%.2f", locale: Locale.current, row.resultDigit * rate) : ""
@@ -131,7 +131,7 @@ struct ListDetail: View {
         }
         return csv
     }
-    
+
     func csvURL() -> URL {
         let csv = exportCSV()
         let url = FileManager.default.temporaryDirectory

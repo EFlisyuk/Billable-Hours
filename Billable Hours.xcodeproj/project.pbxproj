@@ -22,16 +22,6 @@
 		79BE5B292E79815C00F183F7 /* Billable Hours.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Billable Hours.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		799E67AF3001430B00EB3530 /* Exceptions for "Billable Hours" folder in "Billable HoursTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				ViewModels/HoursFieldsModel.swift,
-			);
-			target = 799E67A43001404E00EB3530 /* Billable HoursTests */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		799E67A63001404E00EB3530 /* Billable HoursTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -40,9 +30,6 @@
 		};
 		79BE5B2B2E79815C00F183F7 /* Billable Hours */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				799E67AF3001430B00EB3530 /* Exceptions for "Billable Hours" folder in "Billable HoursTests" target */,
-			);
 			path = "Billable Hours";
 			sourceTree = "<group>";
 		};

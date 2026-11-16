@@ -28,7 +28,7 @@ func previewContainer() -> ModelContainer {
     for calc in testCalc {
         context.insert(calc)
     }
-//    context.insert(testCalc)
+
     for list in testLists {
         context.insert(list)
     }

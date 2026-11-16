@@ -10,7 +10,7 @@ import SwiftUI
 struct CopyButton: View {
     let result: Double
     @Binding var showCopied: Bool
-    
+
     var body: some View {
         Button {
             UIPasteboard.general.string = String(format: "%.3f", locale: Locale.current, result)

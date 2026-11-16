@@ -17,6 +17,9 @@ struct NewListView: View {
     var hourlyRate: String
 
     var body: some View {
+        let sumDurations = Totals.sumDurations(calculations)
+        let sumHours = Totals.sumHours(calculations)
+
         Form {
             TextField("New List Name", text: $newHoursListName)
                 .textSelectionAffinity(.upstream)
@@ -32,6 +35,7 @@ struct NewListView: View {
                     Image(systemName: "clock")
                     Text("\(sumDurations)")
                     Spacer()
+
                     Image(systemName: "h.circle")
                     Text("\(sumHours, specifier: "%.3f")")
                 }
@@ -94,20 +98,6 @@ struct NewListView: View {
         }
     }
 
-    private var sumHours: Double {
-        calculations.reduce(0) {$0 + $1.resultDigit}
-    }
-
-    private var sumDurations: String {
-        let sumResultDigit = calculations.reduce(0) { $0 + $1.resultDigit }
-
-        let h = Int(sumResultDigit)
-        let m = Int((sumResultDigit * 60).truncatingRemainder(dividingBy: 60))
-        let s = Int((sumResultDigit * 3600).truncatingRemainder(dividingBy: 60))
-
-        return String(format: "%d:%02d:%02d", h, m, s)
-    }
-
     private var defaultListName: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd.MM.yyyy HH:mm"
@@ -118,5 +108,6 @@ struct NewListView: View {
 #Preview {
     @Previewable @State var hourlyRate: String = "0.0"
     NewListView(hourlyRate: hourlyRate)
-        .modelContainer(for: [HoursFieldsModel.self, HoursList.self], inMemory: true)
+        .modelContainer(previewContainer())
+
 }
