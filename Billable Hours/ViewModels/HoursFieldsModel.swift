@@ -28,7 +28,7 @@ class HoursFieldsModel {
 
     func submit() {
         let hours = calculateHours(hoursStr, minutesStr, secondsStr)
-        resultDigit = hours
+        resultDigit = hours.rounded(to: 3)
         resultString = formatted(hoursStr, minutesStr, secondsStr)
     }
 
@@ -41,53 +41,33 @@ class HoursFieldsModel {
         guard let minutesInt = Int(minutes) else {
             return false
         }
-        if minutesInt > 59 {
-            return false
-        }
-        return true
+        return (0...59).contains(minutesInt)
     }
 
     func isValidSeconds(_ seconds: String) -> Bool {
         guard let secondsInt = Int(seconds) else {
             return false
         }
-        if secondsInt > 59 {
-            return false
-        }
-        return true
+        return (0...59).contains(secondsInt)
     }
 
     func isValidHours(_ hours: String) -> Bool {
         guard let hoursInt = Int(hours) else {
             return false
         }
-        if hoursInt > 999 {
-            return false
-        }
-        return true
+        return (0...999).contains(hoursInt)
     }
 
     func hoursInt(_ string: String) -> Int {
-        var hours = 0
-        if string.count > 0 {
-            hours = Int(string)!
-            return hours
-        }
-        return hours
+        Int(string) ?? 0
     }
 
     func secondsInt(_ string: String) -> Int {
-        if string.count > 0 {
-            return Int(string)!
-        }
-        return 0
+        Int(string) ?? 0
     }
 
     func minutesInt (_ string: String) -> Int {
-        if string.count > 0 {
-            return Int(string)!
-        }
-        return 0
+        Int(string) ?? 0
     }
 
     func formatted(_ hours: String, _ minutes: String, _ seconds: String) -> String {

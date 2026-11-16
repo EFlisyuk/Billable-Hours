@@ -88,7 +88,7 @@ struct CalcHoursFields: View {
         }
         .overlay(alignment: .top) {
             if showCopied {
-                copiedBadge
+                CopiedBadgeView()
             }
         }
         .animation(.easeInOut, value: showCopied)
@@ -182,17 +182,6 @@ struct CalcHoursFields: View {
             let calcToDelete = calculations[index]
             context.delete(calcToDelete)
         }
-    }
-
-    private var copiedBadge: some View {
-        Text("Copied")
-            .font(.subheadline)
-            .padding(.vertical, 8)
-            .padding(.horizontal, 12)
-            .background(.white)
-            .clipShape(Capsule())
-            .padding(.top, 12)
-            .transition(.move(edge: .top).combined(with: .opacity))
     }
 
     private var sumHours: Double {

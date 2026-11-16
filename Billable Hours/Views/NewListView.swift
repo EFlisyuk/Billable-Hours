@@ -33,7 +33,7 @@ struct NewListView: View {
                     Text("\(sumDurations)")
                     Spacer()
                     Image(systemName: "h.circle")
-                    Text("\(sumHours)")
+                    Text("\(sumHours, specifier: "%.3f")")
                 }
 
                 ForEach(calculations) { result in

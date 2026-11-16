@@ -12,47 +12,50 @@ struct InputHoursFields: View {
     @Bindable var vmh: HoursFieldsModel
     @Environment(\.modelContext) private var context
     @Query var calculations: [HoursFieldsModel]
-    
+
     var body: some View {
         VStack (spacing: 0) {
-            Form {
-                Section {
-                    HStack(spacing: 10) {
-                        TextField ("00", text: $vmh.hoursStr)
-                            .numberFieldBaseStyle()
-                            .foregroundStyle(vmh.isValidHours(vmh.hoursStr) ? .blue : .red)
-                        
-                        Text(":")
-                            .foregroundStyle(.secondary)
-                        
-                        TextField ("00", text: $vmh.minutesStr)
-                            .numberFieldBaseStyle()
-                            .foregroundStyle(vmh.isValidMinutes(vmh.minutesStr) ? .blue : .red)
-                        
-                        Text(":")
-                            .foregroundStyle(.secondary)
-                        
-                        TextField ("00", text: $vmh.secondsStr)
-                            .numberFieldBaseStyle()
-                            .foregroundStyle(vmh.isValidSeconds(vmh.secondsStr) ? .blue : .red)
-                        
-                        Spacer()
-                        
-                        CalcButton(vmh: vmh)
-                    }
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.clear)
+            Section {
+                HStack(spacing: 10) {
+                    TextField ("00", text: $vmh.hoursStr)
+                        .numberFieldBaseStyle()
+                        .foregroundStyle(vmh.isValidHours(vmh.hoursStr) ? .blue : .red)
+
+                    Text(":")
+                        .foregroundStyle(.secondary)
+
+                    TextField ("00", text: $vmh.minutesStr)
+                        .numberFieldBaseStyle()
+                        .foregroundStyle(vmh.isValidMinutes(vmh.minutesStr) ? .blue : .red)
+
+                    Text(":")
+                        .foregroundStyle(.secondary)
+
+                    TextField ("00", text: $vmh.secondsStr)
+                        .numberFieldBaseStyle()
+                        .foregroundStyle(vmh.isValidSeconds(vmh.secondsStr) ? .blue : .red)
+
+                    Spacer()
+
+                    CalcButton(vmh: vmh)
                 }
-                header: {
+                .padding(.horizontal)
+                .padding(.bottom, 16)
+            } header: {
+                HStack {
                     Text("Duration (hh:mm:ss)")
-                        .padding(.horizontal, 20)
+                        .foregroundStyle(.secondary)
+                        .fontWeight(.semibold)
+                        .padding(.leading, 36)
+                        .padding(.vertical, 12)
+                    Spacer()
                 }
-                .listRowInsets(EdgeInsets())
             }
             .onTapGesture {
                 hideKeyboard()
             }
-        }
+
+        } .background(Color(.systemGroupedBackground))
     }
 }
 

@@ -9,7 +9,15 @@ import SwiftUI
 
 struct CopiedBadgeView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("Copied")
+            .font(.subheadline)
+            .padding(.vertical, 8)
+            .padding(.horizontal, 12)
+            .background(Color(.systemBackground))
+            .foregroundStyle(.primary)
+            .clipShape(Capsule())
+            .padding(.top, 12)
+            .transition(.move(edge: .top).combined(with: .opacity))
     }
 }
 

@@ -29,7 +29,7 @@ struct ListDetail: View {
                 calculatedHoursList
                 
             } else {
-                
+
                 calculatedEarningsList
             }
         }
@@ -43,7 +43,7 @@ struct ListDetail: View {
         }
         .overlay(alignment: .top) {
             if showCopied {
-                copiedBadge
+                CopiedBadgeView()
             }
         }
         .animation(.easeInOut, value: showCopied)
@@ -58,7 +58,7 @@ struct ListDetail: View {
                         Text("\(calculations.sumDurations)")
                     }
                     Spacer()
-                    Text("\(calculations.sumHours)")
+                    Text("\(calculations.sumHours, specifier: "%.3f")")
                     CopyButton(result: calculations.sumHours, showCopied: $showCopied)
                 }
                 .foregroundStyle(.primary)
@@ -111,7 +111,7 @@ struct ListDetail: View {
                         Image(systemName: "dollarsign.circle")
                         
                         if let rate = Double(calculations.hourlyRate) {
-                            Text("\(row.resultDigit * rate, specifier: "%.3f")")
+                            Text("\(row.resultDigit * rate, specifier: "%.2f")")
                         } else {
                             Text("")
                         }
@@ -120,17 +120,6 @@ struct ListDetail: View {
                 }
             }
         }
-    }
-    
-    private var copiedBadge: some View {
-        Text("Copied")
-            .font(.subheadline)
-            .padding(.vertical, 8)
-            .padding(.horizontal, 12)
-            .background(.white)
-            .clipShape(Capsule())
-            .padding(.top, 12)
-            .transition(.move(edge: .top).combined(with: .opacity))
     }
     
     func exportCSV() -> String {

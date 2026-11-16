@@ -16,8 +16,6 @@ struct CalculateView: View {
             VStack(spacing: 0) {
                 VStack(spacing: 0) {
                     InputHoursFields(vmh: vmh)
-                        .frame(height: 100)
-                        .scrollDisabled(true)
 
                     CalcHoursFields()
                 }
