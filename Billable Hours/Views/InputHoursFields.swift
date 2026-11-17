@@ -10,8 +10,6 @@ import SwiftData
 
 struct InputHoursFields: View {
     @Bindable var vmh: HoursFieldsModel
-    @Environment(\.modelContext) private var context
-    @Query var calculations: [HoursFieldsModel]
 
     var body: some View {
         VStack (spacing: 0) {

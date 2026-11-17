@@ -1,5 +1,5 @@
 //
-//  InputFieldsViewModel.swift
+//  HoursFieldsModel.swift
 //  Billable Hours
 //
 //  Created by Елизавета Флисюк on 09.01.26.

@@ -1,5 +1,5 @@
 //
-//  List.swift
+//  HoursList.swift
 //  Billable Hours
 //
 //  Created by Елизавета Флисюк on 06.05.26.
