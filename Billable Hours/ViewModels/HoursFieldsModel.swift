@@ -36,7 +36,6 @@ class HoursFieldsModel {
         isValidMinutes(minutesStr) && isValidSeconds(secondsStr) && isValidHours(hoursStr)
     }
 
-
     func isValidMinutes(_ minutes: String) -> Bool {
         guard let minutesInt = Int(minutes) else {
             return false

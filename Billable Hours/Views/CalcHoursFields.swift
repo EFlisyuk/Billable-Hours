@@ -12,10 +12,9 @@ struct CalcHoursFields: View {
     @Environment(\.modelContext) private var context
     @Query(sort: \HoursFieldsModel.date) var calculations: [HoursFieldsModel]
     @State private var showCopied = false
-    @State private var showModal = false
     @State var selectedMode: ViewMode = .hours
     @State private var hourlyRate: String = ""
-
+    
     var body: some View {
         VStack {
             if calculations.isEmpty {
@@ -31,14 +30,15 @@ struct CalcHoursFields: View {
                     .pickerStyle(.segmented)
                     .padding(.horizontal)
                     .padding(.top, 16)
-
+                    
                     if selectedMode == .hours {
-
+                        
                         calculatedHoursList
-
+                        
                     } else {
-
+                        
                         calculatedEarningsList
+                        
                     }
                 }
                 .background(Color(.systemGroupedBackground))
@@ -47,25 +47,26 @@ struct CalcHoursFields: View {
         .onTapGesture {
             hideKeyboard()
         }
-
-        buttonsListControl
-
+        
+        ButtonsListControl(hourlyRate: hourlyRate)
+        
     }
-
+    
     private var calculatedHoursList: some View {
         List {
             HStack {
                 HStack {
                     Image(systemName: "sum")
-                    Text("\(sumDurations)")
+                    Text("\(Totals.sumDurations(calculations))")
                 }
                 Spacer()
-
-                Text("\(sumHours, specifier: "%.3f")")
-                CopyButton(result: sumHours, showCopied: $showCopied)
+                
+                let totalHours = Totals.sumHours(calculations)
+                Text("\(totalHours, specifier: "%.3f")")
+                CopyButton(result: totalHours, showCopied: $showCopied)
             }
             .foregroundStyle(.primary)
-
+            
             ForEach(calculations) { result in
                 HStack {
                     HStack {
@@ -73,9 +74,9 @@ struct CalcHoursFields: View {
                         Text("\(result.resultString)")
                     }
                     .foregroundStyle(.secondary)
-
+                    
                     Spacer()
-
+                    
                     HStack {
                         Image(systemName: "h.circle")
                         Text("\(result.resultDigit, specifier: "%.3f")")
@@ -93,9 +94,8 @@ struct CalcHoursFields: View {
         }
         .animation(.easeInOut, value: showCopied)
     }
-
+    
     private var calculatedEarningsList: some View {
-
         List {
             HStack {
                 Text("Hourly Rate")
@@ -107,11 +107,12 @@ struct CalcHoursFields: View {
                     .keyboardType(UIDevice.current.userInterfaceIdiom == .pad ? .numbersAndPunctuation : .numberPad)
 #endif
                 HStack {
+                    let totalEarnings = Totals.sumEarnings(hourlyRate, calculations)
                     Image(systemName: "sum")
-                    Text("\(sumEarnings, specifier: "%.2f")")
+                    Text("\(totalEarnings, specifier: "%.2f")")
                 }
             }
-
+            
             ForEach(calculations) { result in
                 HStack {
                     HStack {
@@ -119,12 +120,12 @@ struct CalcHoursFields: View {
                         Text("\(result.resultDigit, specifier: "%.3f")")
                     }
                     .foregroundStyle(.green)
-
+                    
                     Spacer()
-
+                    
                     HStack {
                         Image(systemName: "dollarsign.circle")
-                        if let rate = Double(hourlyRate) {
+                        if let rate = Totals.rate(hourlyRate) {
                             Text("\(result.resultDigit * rate, specifier: "%.2f")")
                         } else {
                             Text("")
@@ -135,78 +136,12 @@ struct CalcHoursFields: View {
             .onDelete(perform: deleteCalc(indexes:))
         }
     }
-
-    private var buttonsListControl: some View {
-
-        HStack (spacing: 16) {
-            Button(role: .destructive) {
-                for row in calculations {
-                    context.delete(row)
-                    do {
-                        try context.save()
-                    }
-                    catch {
-                        print("Clean list error: \(error)")
-                    }
-                }
-            } label: {
-                Label("Clean list", systemImage: "trash")
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 14)
-                    .contentShape(Rectangle())
-            }
-            .buttonsListControlStyle(isEmpty: calculations.isEmpty , color: .red)
-
-            Button {
-                showModal = true
-            } label: {
-                Label("Save list", systemImage: "plus.square")
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 14)
-                    .contentShape(Rectangle())
-            }
-            .buttonsListControlStyle(isEmpty: calculations.isEmpty , color: .green)
-        }
-        .padding()
-        .padding(.bottom, 16)
-        .background(Color(.systemGroupedBackground))
-        .sheet(isPresented: $showModal) {
-            NavigationStack {
-                NewListView(hourlyRate: hourlyRate)
-            }
-        }
-    }
-
+    
     func deleteCalc(indexes: IndexSet) {
         for index in indexes {
             let calcToDelete = calculations[index]
             context.delete(calcToDelete)
         }
-    }
-
-    private var sumHours: Double {
-        calculations.reduce(0) {$0 + $1.resultDigit}
-    }
-
-    private var sumDurations: String {
-        let sumResultDigit = calculations.reduce(0) { $0 + $1.resultDigit }
-
-        let h = Int(sumResultDigit)
-        let m = Int((sumResultDigit * 60).truncatingRemainder(dividingBy: 60))
-        let s = Int((sumResultDigit * 3600).truncatingRemainder(dividingBy: 60))
-
-        return String(format: "%d:%02d:%02d", h, m, s)
-    }
-
-    var sumEarnings: Double {
-        var totalEarnings = 0.0
-        if let rate = Double(hourlyRate) {
-            for result in calculations {
-                let earnings = Double(result.resultDigit) * rate
-                totalEarnings += earnings
-            }
-        }
-        return totalEarnings
     }
 }
 
