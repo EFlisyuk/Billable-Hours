@@ -1,5 +1,5 @@
 //
-//  ViewExtention.swift
+//  ViewExtension.swift
 //  Billable Hours
 //
 //  Created by Елизавета Флисюк on 14.08.2026.

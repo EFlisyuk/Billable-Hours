@@ -18,7 +18,6 @@ struct NumberFieldBaseStyle: ViewModifier {
                 RoundedRectangle(cornerRadius: 16)
                     .fill(Color(.secondarySystemGroupedBackground))
             )
-        //            .keyboardType(.numberPad)
             #if os(iOS)
             .keyboardType(UIDevice.current.userInterfaceIdiom == .pad ? .numbersAndPunctuation : .numberPad)
             #endif
