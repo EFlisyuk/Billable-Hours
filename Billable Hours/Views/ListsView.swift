@@ -10,8 +10,8 @@ import SwiftData
 
 struct ListsView: View {
     @Environment(\.modelContext) private var context
-    @Query(sort: \HoursList.date) var hoursList: [HoursList]
-    
+    @Query(sort: \HoursList.date, order: .reverse) var hoursList: [HoursList]
+
     var body: some View {
         if hoursList.isEmpty {
             ContentUnavailableView("Saved Lists", systemImage: "list.star")
