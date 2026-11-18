@@ -27,7 +27,7 @@ struct ListsView: View {
             .contentMargins(.top, 8)
         }
     }
-    
+
     private func deleteList(indexes: IndexSet) {
         for index in indexes {
             let listToDelete = hoursList[index]
@@ -38,5 +38,5 @@ struct ListsView: View {
 
 #Preview {
     ListsView()
-        .modelContainer(for: [HoursFieldsModel.self, HoursList.self], inMemory: true)
+        .modelContainer(for: [HoursFieldsModel.self, HoursList.self],                     inMemory: true)
 }

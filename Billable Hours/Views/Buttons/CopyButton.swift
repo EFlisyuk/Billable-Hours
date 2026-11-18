@@ -13,12 +13,14 @@ struct CopyButton: View {
 
     var body: some View {
         Button {
-            UIPasteboard.general.string = String(format: "%.3f", locale: Locale.current, result)
+            UIPasteboard.general.string = String(format: "%.3f",
+                                                 locale: Locale.current,
+                                                 result)
             showCopied = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                showCopied = false}
-        }
-        label: {
+                showCopied = false
+            }
+        } label: {
             Image(systemName: "square.on.square")
         }
         .buttonStyle(.borderless)
@@ -30,6 +32,7 @@ struct CopyButton: View {
     @Previewable @State var result: Double = 0
     @Previewable @State var showCopied: Bool = false
     CopyButton(result: result, showCopied: $showCopied)
-        .modelContainer(for: [HoursFieldsModel.self, HoursList.self], inMemory: true)
+        .modelContainer(for: [HoursFieldsModel.self, HoursList.self],
+                        inMemory: true)
 }
 

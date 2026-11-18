@@ -8,7 +8,6 @@
 import SwiftUI
 import SwiftData
 
-
 struct ContentView: View {
 
     var body: some View {
@@ -28,12 +27,14 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: [HoursFieldsModel.self, HoursList.self], inMemory: true)
+        .modelContainer(for: [HoursFieldsModel.self, HoursList.self],
+                        inMemory: true)
 }
 
 #Preview("Dark") {
     ContentView()
-        .modelContainer(for: [HoursFieldsModel.self, HoursList.self], inMemory: true)
+        .modelContainer(for: [HoursFieldsModel.self, HoursList.self],
+                        inMemory: true)
         .preferredColorScheme(.dark)
 }
 
