@@ -27,7 +27,7 @@ enum Totals {
         return String(format: "%d:%02d:%02d", hours, min, sec)
     }
 
-    static func sumHours(_ calculations: [HoursFieldsModel])-> Double {
+    static func sumHours(_ calculations: [HoursFieldsModel]) -> Double {
         calculations.reduce(0) {$0 + $1.resultDigit}
     }
 
