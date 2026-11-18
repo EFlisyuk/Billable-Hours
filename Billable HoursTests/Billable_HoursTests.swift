@@ -16,14 +16,26 @@ struct Billable_HoursTests {
     }
 
     @Test func validation() {
-        let testCalculation = HoursFieldsModel()
-        #expect(testCalculation.isValidMinutes("65") == false)
-        #expect(testCalculation.isValidMinutes("59") == true)
-        #expect(testCalculation.isValidSeconds("59") == true)
-        #expect(testCalculation.isValidSeconds("60") == false)
-        #expect(testCalculation.isValidHours("1000") == false)
-        #expect(testCalculation.isValidHours("999") == true)
-        #expect(testCalculation.isValidHours("-999") == false)
+        let m = HoursFieldsModel()
+        #expect(m.isValidMinutes("65") == false)
+        #expect(m.isValidMinutes("59") == true)
+        #expect(m.isValidMinutes("") == true)        // пустое = 0
+        #expect(m.isValidSeconds("60") == false)
+        #expect(m.isValidHours("1000") == false)
+        #expect(m.isValidHours("-999") == false)
+    }
+
+    @Test func emptyFieldsAreNotSubmittable() {
+        let m = HoursFieldsModel()
+        #expect(m.isValid == false)                   // все три пустые
+        m.secondsStr = "4"
+        #expect(m.isValid == true)                    // достаточно одного поля
+    }
+
+    @Test func resultStringIsPadded() {
+        let m = HoursFieldsModel(minutesStr: "3")
+        m.submit()
+        #expect(m.resultString == "0:03:00")
     }
 
     @Test func totals() {

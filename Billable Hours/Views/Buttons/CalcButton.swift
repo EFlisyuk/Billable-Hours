@@ -11,11 +11,23 @@ import SwiftData
 struct CalcButton: View {
     @Bindable var vmh: HoursFieldsModel
     @Environment(\.modelContext) private var context
-    
+
     var body: some View {
         Button("Calc", systemImage: "arrow.right")
         {
-            hideKeyboard() 
+            hideKeyboard()
+            if vmh.hoursStr.isEmpty {
+                vmh.hoursStr = "0"
+            }
+
+            if vmh.minutesStr.isEmpty {
+                vmh.minutesStr = "0"
+            }
+
+            if vmh.secondsStr.isEmpty {
+                vmh.secondsStr = "0"
+            }
+
             // create new object
             let newCalculation = HoursFieldsModel(
                 hoursStr: vmh.hoursStr,
@@ -34,7 +46,6 @@ struct CalcButton: View {
             } catch {
                 print("Save error: \(error.localizedDescription)")
             }
-
             vmh.hoursStr = ""
             vmh.minutesStr = ""
             vmh.secondsStr = ""

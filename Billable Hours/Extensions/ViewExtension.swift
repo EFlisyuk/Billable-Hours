@@ -13,3 +13,12 @@ extension View {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
+
+extension View {
+    func fieldBorder(_ state: FieldsState) -> some View {
+        overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(state.color, lineWidth: state.borderWidth)
+        )
+    }
+}

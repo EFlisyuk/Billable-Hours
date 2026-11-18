@@ -15,23 +15,22 @@ struct InputHoursFields: View {
         VStack (spacing: 0) {
             Section {
                 HStack(spacing: 10) {
-                    TextField ("00", text: $vmh.hoursStr)
-                        .numberFieldBaseStyle()
-                        .foregroundStyle(vmh.isValidHours(vmh.hoursStr) ? .blue : .red)
 
+                    TextField("00", text: $vmh.hoursStr)
+                        .numberFieldBaseStyle()
+                        .fieldBorder(state(vmh.hoursStr, isValid: vmh.isValidHours(vmh.hoursStr)))
                     Text(":")
                         .foregroundStyle(.secondary)
 
-                    TextField ("00", text: $vmh.minutesStr)
+                    TextField("00", text: $vmh.minutesStr)
                         .numberFieldBaseStyle()
-                        .foregroundStyle(vmh.isValidMinutes(vmh.minutesStr) ? .blue : .red)
-
+                        .fieldBorder(state(vmh.minutesStr, isValid: vmh.isValidMinutes(vmh.minutesStr)))
                     Text(":")
                         .foregroundStyle(.secondary)
 
-                    TextField ("00", text: $vmh.secondsStr)
+                    TextField("00", text: $vmh.secondsStr)
                         .numberFieldBaseStyle()
-                        .foregroundStyle(vmh.isValidSeconds(vmh.secondsStr) ? .blue : .red)
+                        .fieldBorder(state(vmh.secondsStr, isValid: vmh.isValidSeconds(vmh.secondsStr)))
 
                     Spacer()
 
@@ -52,8 +51,18 @@ struct InputHoursFields: View {
             .onTapGesture {
                 hideKeyboard()
             }
+        }
+        .background(Color(.systemGroupedBackground))
+    }
 
-        } .background(Color(.systemGroupedBackground))
+    private func state(_ text: String, isValid: Bool) -> FieldsState {
+        if text.isEmpty {
+            return .start
+        }
+        else if isValid {
+            return .moderate
+        }
+        return .error
     }
 }
 

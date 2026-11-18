@@ -17,7 +17,12 @@ class HoursFieldsModel {
     var resultString: String
     var date: Date = Date()
 
-    init(hoursStr: String = "", minutesStr: String = "", secondsStr: String = "", resultDigit: Double = 0, resultString: String = "", date: Date = .now) {
+    init(hoursStr: String = "",
+         minutesStr: String = "",
+         secondsStr: String = "",
+         resultDigit: Double = 0,
+         resultString: String = "",
+         date: Date = .now) {
         self.hoursStr = hoursStr
         self.minutesStr = minutesStr
         self.secondsStr = secondsStr
@@ -34,9 +39,11 @@ class HoursFieldsModel {
 
     var isValid: Bool {
         isValidMinutes(minutesStr) && isValidSeconds(secondsStr) && isValidHours(hoursStr)
+            && !(minutesStr.isEmpty && secondsStr.isEmpty && hoursStr.isEmpty)
     }
 
     func isValidMinutes(_ minutes: String) -> Bool {
+        if minutes.isEmpty { return true }
         guard let minutesInt = Int(minutes) else {
             return false
         }
@@ -44,6 +51,7 @@ class HoursFieldsModel {
     }
 
     func isValidSeconds(_ seconds: String) -> Bool {
+        if seconds.isEmpty { return true }
         guard let secondsInt = Int(seconds) else {
             return false
         }
@@ -51,6 +59,7 @@ class HoursFieldsModel {
     }
 
     func isValidHours(_ hours: String) -> Bool {
+        if hours.isEmpty { return true }
         guard let hoursInt = Int(hours) else {
             return false
         }
@@ -65,31 +74,21 @@ class HoursFieldsModel {
         Int(string) ?? 0
     }
 
-    func minutesInt (_ string: String) -> Int {
+    func minutesInt(_ string: String) -> Int {
         Int(string) ?? 0
     }
 
     func formatted(_ hours: String, _ minutes: String, _ seconds: String) -> String {
-        var formattedStr: [String] = []
-        formattedStr.append(hours)
-        formattedStr.append(":")
-        formattedStr.append(minutes)
-        formattedStr.append(":")
-        formattedStr.append(seconds)
-        let stringResult = String(formattedStr.joined())
-
-        return stringResult
+        let hours = hoursInt(hours)
+        let minutes = minutesInt(minutes)
+        let seconds = secondsInt(seconds)
+        return String(format: "%d:%02d:%02d", hours, minutes, seconds)
     }
 
-    func calculateHours (_ hours: String, _ minutes: String, _ seconds: String) -> Double {
+    func calculateHours(_ hours: String, _ minutes: String, _ seconds: String) -> Double {
         let hours = hoursInt(hours)
         let minutes = minutesInt(minutes)
         let seconds = secondsInt(seconds)
         return Double(hours) + Double(minutes) / 60 + Double(seconds) / 3600
     }
 }
-
-
-
-
-

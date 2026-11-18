@@ -12,6 +12,7 @@ struct NumberFieldBaseStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
             .multilineTextAlignment(.center)
+            .foregroundStyle(.blue)
             .padding(.vertical, 8)
             .padding(.horizontal, 4)
             .background(
@@ -19,7 +20,8 @@ struct NumberFieldBaseStyle: ViewModifier {
                     .fill(Color(.secondarySystemGroupedBackground))
             )
             #if os(iOS)
-            .keyboardType(UIDevice.current.userInterfaceIdiom == .pad ? .numbersAndPunctuation : .numberPad)
+            .keyboardType(UIDevice.current.userInterfaceIdiom == .pad
+                          ? .numbersAndPunctuation : .numberPad)
             #endif
     }
 }
@@ -29,4 +31,3 @@ extension View {
         self.modifier(NumberFieldBaseStyle())
     }
 }
-
