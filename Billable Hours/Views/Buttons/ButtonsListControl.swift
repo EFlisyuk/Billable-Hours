@@ -23,8 +23,7 @@ struct ButtonsListControl: View {
                 }
                 do {
                     try context.save()
-                }
-                catch {
+                } catch {
                     print("Clean list error: \(error)")
                 }
             } label: {
@@ -32,7 +31,8 @@ struct ButtonsListControl: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
             }
-            .buttonsListControlStyle(isEmpty: calculations.isEmpty , color: .red)
+            .buttonsListControlStyle(isEmpty: calculations.isEmpty,
+                                     color: .red)
 
             Button {
                 showModal = true
@@ -41,12 +41,12 @@ struct ButtonsListControl: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
             }
-            .buttonsListControlStyle(isEmpty: calculations.isEmpty , color: .green)
+            .buttonsListControlStyle(isEmpty: calculations.isEmpty,
+                                     color: .green)
         }
         .padding()
         .padding(.bottom, 16)
         .background(Color(.systemGroupedBackground))
-
         .sheet(isPresented: $showModal) {
             NavigationStack {
                 NewListView(hourlyRate: hourlyRate)

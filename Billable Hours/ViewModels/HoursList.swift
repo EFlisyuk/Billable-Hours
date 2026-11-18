@@ -17,7 +17,12 @@ class HoursList {
     var listResults: [ArchivedCalculation]
     var date: Date
     
-    init(name: String, sumHours: Double, sumDurations: String, hourlyRate: String, listResults: [ArchivedCalculation], date: Date = .now) {
+    init(name: String,
+         sumHours: Double,
+         sumDurations: String,
+         hourlyRate: String,
+         listResults: [ArchivedCalculation],
+         date: Date = .now) {
         self.name = name
         self.sumHours = sumHours
         self.sumDurations = sumDurations

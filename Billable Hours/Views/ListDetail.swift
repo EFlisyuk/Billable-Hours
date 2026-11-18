@@ -107,11 +107,8 @@ struct ListDetail: View {
 
                     HStack {
                         Image(systemName: "dollarsign.circle")
-
                         if let rate = Totals.rate(calculations.hourlyRate) {
                             Text("\(row.resultDigit * rate, specifier: "%.2f")")
-                        } else {
-                            Text("")
                         }
                     }
                     .foregroundStyle(.secondary)
