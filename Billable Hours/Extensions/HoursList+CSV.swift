@@ -8,7 +8,6 @@
 import Foundation
 
 extension HoursList {
-
     func exportCSV() -> String {
         let rate = Totals.rate(hourlyRate) ?? 0
         var csv = "Duration;Hours;Earnings;Hourly Rate\n"
@@ -22,7 +21,7 @@ extension HoursList {
     func csvURL() -> URL {
         let csv = exportCSV()
         let url = FileManager.default.temporaryDirectory
-            .appendingPathComponent("\(name).csv")
+            .appending(component: "\(name).csv", directoryHint: .notDirectory)
         try? csv.write(to: url, atomically: true, encoding: .utf8)
         return url
     }
