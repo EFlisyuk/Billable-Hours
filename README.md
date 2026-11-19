@@ -1,4 +1,4 @@
-# Billiable Hours
+# Billiable Hours: Earnings
 
 A freelance time-tracking app for iOS and macOS. Log your work sessions in hh:mm:ss format, convert them to decimal hours, calculate earnings at your hourly rate, and export reports as CSV.
 
